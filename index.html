@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detmachina</title>
+    <meta name="description" content="AI integration studio. Detroit.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0c0b0a;
+            --bg-warm: #110f0d;
+            --text: #e2ddd5;
+            --text-mid: #9b9488;
+            --text-dim: #5c574f;
+            --accent: #c85a28;
+            --accent-dim: rgba(200, 90, 40, 0.12);
+            --accent-hover: #da6e3a;
+            --rule: rgba(155, 148, 136, 0.12);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: rgba(12, 11, 10, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .logo {
+            font-size: 1.125rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-right a {
+            font-size: 0.875rem;
+            color: var(--text-mid);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+        }
+
+        .nav-right a:hover { color: var(--text); }
+
+        .nav-right .cta-link {
+            color: var(--accent);
+        }
+
+        .nav-right .cta-link:hover { color: var(--accent-hover); }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 3rem 6rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 50%;
+            height: 70%;
+            background: radial-gradient(ellipse at top right, rgba(200, 90, 40, 0.06) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-label {
+            font-size: 0.8125rem;
+            color: var(--accent);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            max-width: 900px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-body {
+            margin-top: 3rem;
+            font-size: 1.1875rem;
+            font-weight: 300;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 520px;
+        }
+
+        .hero-rule {
+            width: 100%;
+            height: 1px;
+            background: var(--rule);
+            margin-top: 4rem;
+        }
+
+        .hero-scroll {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.25rem;
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+            letter-spacing: 0.02em;
+        }
+
+        .scroll-arrows {
+            display: flex;
+            gap: 0.5rem;
+            color: var(--text-dim);
+            font-size: 1.125rem;
+        }
+
+        /* ── FULL-WIDTH STATEMENT ── */
+        .statement {
+            padding: 10rem 3rem;
+            border-top: 1px solid var(--rule);
+        }
+
+        .statement-inner {
+            max-width: 1000px;
+        }
+
+        .statement h2 {
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        .statement h2 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .statement p {
+            margin-top: 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 300;
+            color: var(--text-mid);
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        /* ── PHILOSOPHY (2degrees-inspired "We [verb]" section) ── */
+        .philosophy {
+            padding: 0 3rem 10rem;
+        }
+
+        .philosophy-label {
+            font-size: 0.8125rem;
+            color: var(--accent);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-align: right;
+            margin-bottom: 4rem;
+            font-weight: 400;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--rule);
+        }
+
+        .phil-item {
+            background: var(--bg);
+            padding: 3rem;
+            transition: background 0.3s;
+        }
+
+        .phil-item:hover {
+            background: var(--bg-warm);
+        }
+
+        .phil-verb {
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+        }
+
+        .phil-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .phil-desc {
+            font-size: 0.9375rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ── PROCESS ── */
+        .process {
+            padding: 10rem 3rem;
+            border-top: 1px solid var(--rule);
+        }
+
+        .process-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5rem;
+        }
+
+        .process-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .process-header h2 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .process-label {
+            font-size: 0.8125rem;
+            color: var(--accent);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 400;
+            padding-top: 0.5rem;
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 0;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 3rem;
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--rule);
+            align-items: baseline;
+        }
+
+        .step-num {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--text-dim);
+            line-height: 1;
+        }
+
+        .step-body h3 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .step-body p {
+            font-size: 0.9375rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            font-weight: 300;
+            max-width: 500px;
+        }
+
+        /* ── ABOUT ── */
+        .about {
+            padding: 10rem 3rem;
+            border-top: 1px solid var(--rule);
+            background: var(--bg-warm);
+        }
+
+        .about-inner {
+            max-width: 700px;
+        }
+
+        .about-label {
+            font-size: 0.8125rem;
+            color: var(--accent);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .about h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-bottom: 2.5rem;
+        }
+
+        .about h2 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .about p {
+            font-size: 1.0625rem;
+            color: var(--text-mid);
+            line-height: 1.85;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── CTA ── */
+        .cta {
+            padding: 10rem 3rem;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+            margin-bottom: 2rem;
+        }
+
+        .cta h2 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .cta p {
+            font-size: 1.0625rem;
+            color: var(--text-mid);
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 440px;
+            margin: 0 auto 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--accent-hover); }
+
+        .cta-email {
+            margin-top: 1.75rem;
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+        }
+
+        .cta-email a {
+            color: var(--text-mid);
+            text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            transition: color 0.2s;
+        }
+
+        .cta-email a:hover { color: var(--accent); }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--rule);
+            padding: 2.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .footer-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: 0.04em;
+        }
+
+        .footer-meta {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.02em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text-mid); }
+
+        /* ── FADE IN ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav { padding: 1.25rem 1.5rem; }
+            .nav-right { display: none; }
+            .nav-right.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0; right: 0;
+                background: rgba(12, 11, 10, 0.98);
+                padding: 1.5rem;
+                gap: 1.25rem;
+                border-bottom: 1px solid var(--rule);
+            }
+            .mobile-toggle { display: block; }
+            .hero { padding: 0 1.5rem 4rem; }
+            .statement { padding: 6rem 1.5rem; }
+            .philosophy { padding: 0 1.5rem 6rem; }
+            .philosophy-grid { grid-template-columns: 1fr; }
+            .process { padding: 6rem 1.5rem; }
+            .process-header { flex-direction: column; gap: 1rem; }
+            .step { grid-template-columns: 60px 1fr; gap: 1.5rem; }
+            .about { padding: 6rem 1.5rem; }
+            .cta { padding: 6rem 1.5rem; }
+            footer { flex-direction: column; gap: 1.25rem; text-align: center; padding: 2rem 1.5rem; }
+            .footer-links { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">detmachina</a>
+        <button class="mobile-toggle" onclick="document.querySelector('.nav-right').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+        <ul class="nav-right">
+            <li><a href="#approach">Approach</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact" class="cta-link">Start a conversation</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-label">Detroit</div>
+        <h1 class="reveal">We build the machines<br>that run your <em>business.</em></h1>
+        <p class="hero-body reveal">
+            AI systems for the companies that keep this city running. Custom-built. Quietly powerful. Yours.
+        </p>
+        <div class="hero-rule"></div>
+        <div class="hero-scroll">
+            <span>Scroll down</span>
+            <div class="scroll-arrows">&darr; &darr; &darr;</div>
+        </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="statement">
+        <div class="statement-inner">
+            <h2 class="reveal">
+                We are not a software company. We don't sell dashboards or subscriptions. We study how your business <em>actually works</em>&mdash;then we build intelligence into it.
+            </h2>
+            <p class="reveal">
+                Most technology is built for people who already understand technology. We build for the people who build everything else. The contractors, the operators, the owners who answer their own phones at 6 AM.
+            </p>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section id="approach" class="philosophy">
+        <div class="philosophy-label">Our Approach</div>
+        <div class="philosophy-grid">
+            <div class="phil-item reveal">
+                <div class="phil-verb">We listen</div>
+                <div class="phil-title">before we build anything.</div>
+                <div class="phil-desc">Thirty minutes. No pitch deck. Just a conversation about what's costing you time and money. If AI isn't the answer, we'll say so.</div>
+            </div>
+            <div class="phil-item reveal">
+                <div class="phil-verb">We engineer</div>
+                <div class="phil-title">systems that disappear into your workflow.</div>
+                <div class="phil-desc">The busywork, the bottlenecks, the things that keep falling through the cracks. They stop. You don't notice the system working. You notice the problems disappearing.</div>
+            </div>
+            <div class="phil-item reveal">
+                <div class="phil-verb">We operate</div>
+                <div class="phil-title">what we build. Indefinitely.</div>
+                <div class="phil-desc">We don't hand you a login and walk away. We monitor, optimize, and evolve your system every month. One flat bill. No surprises.</div>
+            </div>
+            <div class="phil-item reveal">
+                <div class="phil-verb">We compound</div>
+                <div class="phil-title">your advantage over time.</div>
+                <div class="phil-desc">Every month your system gets smarter. More automated. More integrated. The gap between you and your competitors widens quietly.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="process">
+        <div class="process-header">
+            <h2 class="reveal">From conversation to<br>live system in <em>two weeks.</em></h2>
+            <div class="process-label">How It Works</div>
+        </div>
+        <div class="process-steps">
+            <div class="step reveal">
+                <div class="step-num">01</div>
+                <div class="step-body">
+                    <h3>Discovery</h3>
+                    <p>We map your operations, identify friction, and determine exactly where intelligence creates leverage. No jargon. No sixty-page proposal.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">02</div>
+                <div class="step-body">
+                    <h3>Architecture</h3>
+                    <p>We design and build your system from scratch&mdash;integrated with the tools you already use. You see a working demo before anything touches your business.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">03</div>
+                <div class="step-body">
+                    <h3>Deployment</h3>
+                    <p>Your system goes live. We handle the transition. If there's anything you need to know, we show you once. The whole point is that you don't have to think about it.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">04</div>
+                <div class="step-body">
+                    <h3>Evolution</h3>
+                    <p>Monthly optimization. Performance tuning. Expansion into new workflows as you grow. The machine gets better. So does your margin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <div class="about-inner">
+            <div class="about-label">About</div>
+            <h2 class="reveal">Built in Detroit.<br>Built for <em>operators.</em></h2>
+            <p class="reveal">
+                detmachina is an AI integration studio based in Detroit. We work exclusively with small, independently owned businesses&mdash;the companies that don't have a CTO, an IT department, or the patience for Silicon Valley's way of doing things.
+            </p>
+            <p class="reveal">
+                We don't write reports about what you could do. We build the thing, we run the thing, and we make it better every month. Flat pricing. Plain language. No mystery invoices.
+            </p>
+            <p class="reveal">
+                We prefer to work with people who build things.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta">
+        <h2 class="reveal">Ready to talk<br>about what's <em>possible?</em></h2>
+        <p class="reveal">
+            No pitch. No pressure. Just an honest conversation about what AI can do for your specific business.
+        </p>
+        <a href="https://cal.com" class="btn reveal">Start a conversation &rarr;</a>
+        <p class="cta-email reveal">
+            Or reach us directly at <a href="mailto:hello@detmachina.com">hello@detmachina.com</a>
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            <span class="footer-name">detmachina</span>
+            <span class="footer-meta">42.3314&deg; N, 83.0458&deg; W</span>
+            <span class="footer-meta">&copy; 2026 detmachina llc</span>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:hello@detmachina.com">Email</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        document.querySelectorAll('.nav-right a').forEach(a => {
+            a.addEventListener('click', () => document.querySelector('.nav-right').classList.remove('open'));
+        });
+    </script>
+</body>
+</html>
